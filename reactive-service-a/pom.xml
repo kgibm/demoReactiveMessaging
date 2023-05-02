@@ -23,9 +23,10 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.microprofile.reactive.messaging</groupId>
-      <artifactId>microprofile-reactive-messaging-api</artifactId>
-      <version>3.0</version>
+      <groupId>io.smallrye.reactive</groupId>
+      <artifactId>smallrye-reactive-messaging</artifactId>
+      <version>4.5.0</version>
+      <type>pom</type>
     </dependency>
     <dependency>
       <groupId>io.smallrye.reactive</groupId>
