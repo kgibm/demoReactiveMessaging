@@ -14,7 +14,7 @@
    ```
    podman run --rm --network kafka -it docker.io/bitnami/kafka kafka-topics.sh --create --topic topic1 --bootstrap-server kafka:9092
    ```
-1. Build reactive services:
+1. Build:
    ```
    mvn -Dimage.builder.arguments="--platform linux/amd64" clean deploy
    ```
@@ -26,6 +26,7 @@
    ```
    podman run --rm --network kafka -p 9080:9080 -e mp.messaging.connector.liberty-kafka.bootstrap.servers=kafka:9092 -it localhost/reactive-service-a:latest
    ```
+1. Every 30 seconds, it should be visible in respective container logs that `reactive-service-a` is creating a message and `reactive-service-b` is receiving it.
 
 ## Resources
 
