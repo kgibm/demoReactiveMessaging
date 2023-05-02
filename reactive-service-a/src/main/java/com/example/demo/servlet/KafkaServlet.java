@@ -16,7 +16,7 @@ public class KafkaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     @Inject
-    @Channel("prices")
+    @Channel("prices2")
     Emitter<Integer> emitter;
 
 	@Override

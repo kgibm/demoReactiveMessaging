@@ -11,7 +11,7 @@ import io.reactivex.Flowable;
 public class KafkaProducer {
     Random random = new Random();
     
-    @Outgoing("prices")
+    @Outgoing("prices1")
     public Flowable<Integer> generatePrice() {
         System.out.println("KafkaProducer.generatePrice initializing @ " + java.time.Instant.now());
         return Flowable.interval(30, TimeUnit.SECONDS)

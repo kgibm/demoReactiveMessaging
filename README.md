@@ -10,9 +10,13 @@
    ```
    podman run --rm -p 9092:9092 -e ALLOW_PLAINTEXT_LISTENER=yes --name kafka --network kafka docker.io/bitnami/kafka
    ```
-1. Create the Kafka `topic1` topic:
+1. Create the Kafka `prices1` topic:
    ```
-   podman run --rm --network kafka -it docker.io/bitnami/kafka kafka-topics.sh --create --topic topic1 --bootstrap-server kafka:9092
+   podman run --rm --network kafka -it docker.io/bitnami/kafka kafka-topics.sh --create --topic prices1 --bootstrap-server kafka:9092
+   ```
+1. Create the Kafka `prices2` topic:
+   ```
+   podman run --rm --network kafka -it docker.io/bitnami/kafka kafka-topics.sh --create --topic prices2 --bootstrap-server kafka:9092
    ```
 1. Build:
    ```
