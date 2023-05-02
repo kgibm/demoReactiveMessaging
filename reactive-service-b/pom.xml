@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>reactive-service-b</artifactId>
+  <packaging>war</packaging>
+
+	<parent>
+		<version>1.0-SNAPSHOT</version>
+		<groupId>com.example</groupId>
+		<artifactId>demoReactiveMessaging</artifactId>
+	</parent>
+
+  <properties>
+    <image.name>${project.artifactId}</image.name>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.microprofile</groupId>
+      <artifactId>microprofile</artifactId>
+      <version>3.0</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.microprofile.reactive.messaging</groupId>
+      <artifactId>microprofile-reactive-messaging-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+    <dependency> 
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.7</version>
+    </dependency>
+    <dependency> 
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>2.0.7</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>${project.artifactId}</finalName>
+  </build>
+  <profiles>
+    <profile>
+      <id>liberty</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.2</version>
+            <configuration>
+              <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <version>3.1.1</version>
+            <configuration>
+              <!--
+                Disable the default deploy plugin so that we can
+                use the deploy phase to build the container.
+              -->
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>io.openliberty.tools</groupId>
+            <artifactId>liberty-maven-plugin</artifactId>
+            <version>${openliberty.maven.version}</version>
+            <executions>
+              <execution>
+                <id>package-server</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>create</goal>
+                  <goal>install-feature</goal>
+                  <goal>deploy</goal>
+                  <goal>package</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>target/wlp-package</outputDirectory>
+                </configuration>
+              </execution>
+            </executions>
+            <configuration>
+              <assemblyArtifact>
+                <groupId>io.openliberty</groupId>
+                <artifactId>openliberty-runtime</artifactId>
+                <version>${openliberty.version}</version>
+                <type>zip</type>
+              </assemblyArtifact>
+              <include>runnable</include>
+              <serverName>${project.build.finalName}</serverName>
+              <bootstrapProperties>
+                <project.name>${project.build.finalName}</project.name>
+                <jwt.issuer>https://example.com</jwt.issuer>
+              </bootstrapProperties>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <phase>deploy</phase>
+                <configuration>
+                  <target xmlns:if="ant:if" xmlns:unless="ant:unless">
+                    <echo level="info" message="Building ${image.repository}${image.user}${image.name}:${image.tag}" />
+                    <exec dir="${project.basedir}" executable="${image.builder}" failonerror="true">
+                      <arg value="build" />
+                      <arg value="--build-arg" />
+                      <arg value="VERSION=${project.version}" />
+                      <arg value="--build-arg" />
+                      <arg value="AUTHORS=${image.authors}" />
+                      <arg value="--build-arg" />
+                      <arg value="VENDOR=${image.vendor}" />
+                      <arg value="--build-arg" />
+                      <arg value="SUMMARY=${image.summary}" />
+                      <arg value="--build-arg" />
+                      <arg value="NAME=${image.name}" />
+                      <arg value="--build-arg" />
+                      <arg value="DESCRIPTION=${image.description}" />
+                      <arg value="--build-arg" />
+                      <arg value="URL=${image.url}" />
+                      <arg value="--build-arg" />
+                      <arg value="SOURCE=${image.source}" />
+                      <arg value="--file" />
+                      <arg value="Containerfile" />
+                      <arg line="${image.builder.arguments}" />
+                      <arg value="-t" />
+                      <arg value="${image.repository}${image.user}${image.name}:${image.tag}" />
+                      <arg value="." />
+                    </exec>
+
+                    <echo level="info" message="==================" />
+                    <echo level="info" message="Created local container image ${image.repository}${image.user}${image.name}:${image.tag}" />
+                    <echo level="info" message="To run this image:" />
+                    <echo level="info" message="  ${image.builder} run --rm -it ${image.repository}${image.user}${image.name}:${image.tag}" />
+                  </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

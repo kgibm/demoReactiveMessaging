@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+    <featureManager>
+        <feature>microProfile-3.2</feature>
+        <feature>mpReactiveMessaging-1.0</feature>
+    </featureManager>
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9081" httpsPort="9444" />
+    <webApplication location="${project.name}.war" contextRoot="/"/>
+</server>
