@@ -12,8 +12,8 @@
   <properties>
     <openliberty.maven.version>3.7.1</openliberty.maven.version>
     <openliberty.version>23.0.0.3</openliberty.version>
-    <!-- https://openliberty.io/blog/2022/09/29/instant-on-beta.html#checkpoint-app -->
-    <checkpoint.type>features</checkpoint.type>
+    <!-- https://openliberty.io/blog/2023/02/10/instant-on-beta-update.html -->
+    <checkpoint.type>deployment</checkpoint.type>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

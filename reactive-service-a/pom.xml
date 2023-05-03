@@ -200,7 +200,6 @@
                       <arg value="instanton-temp" />
                       <arg value="--privileged" />
                       <arg value="--env" />
-                      <!-- https://openliberty.io/blog/2022/09/29/instant-on-beta.html#checkpoint-app -->
                       <arg value="WLP_CHECKPOINT=${checkpoint.type}" />
                       <arg value="${image.repository}${image.user}${image.name}:${image.tag}-temp" />
                     </exec>
