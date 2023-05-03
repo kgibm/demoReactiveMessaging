@@ -24,11 +24,11 @@
    ```
 1. Run `reactive-service-b`:
    ```
-   podman run --rm --network kafka -e kafka.bootstrap.servers=kafka:9092 -it localhost/reactive-service-b:latest
+   podman run --privileged --rm --network kafka -e kafka.bootstrap.servers=kafka:9092 -it localhost/reactive-service-b:latest
    ```
 1. Run `reactive-service-a`:
    ```
-   podman run --rm --network kafka -p 9080:9080 -e kafka.bootstrap.servers=kafka:9092 -it localhost/reactive-service-a:latest
+   podman run --privileged --rm --network kafka -p 9080:9080 -e kafka.bootstrap.servers=kafka:9092 -it localhost/reactive-service-a:latest
    ```
 1. Every 30 seconds, it should be visible in respective container logs that `reactive-service-a` is creating a message and `reactive-service-b` is receiving it.
 

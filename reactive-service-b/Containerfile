@@ -1,4 +1,4 @@
-FROM icr.io/appcafe/websphere-liberty:full-java17-openj9-ubi
+FROM icr.io/appcafe/open-liberty:beta-instanton
 
 # These defaults are overridden by `--build-arg` arguments in pom.xml
 ARG NAME=placeholder
@@ -39,9 +39,6 @@ LABEL \
 COPY --chown=default:root target/liberty/wlp/usr/servers/reactive-service-b/server.xml /config/server.xml
 COPY --chown=default:root target/liberty/wlp/usr/servers/reactive-service-b/bootstrap.properties /config/bootstrap.properties
 COPY --chown=default:root target/reactive-service-b.war /config/apps
-
-# We're using the full Liberty image, so no point in checking for features to install
-ENV SKIP_FEATURE_INSTALL=true
 
 # This script will add the requested XML snippets, grow image to be fit-for-purpose and apply interim fixes
 RUN configure.sh
