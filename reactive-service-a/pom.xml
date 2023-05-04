@@ -196,13 +196,9 @@
                       <arg value="run" />
                       <arg value="--platform" />
                       <arg value="linux/amd64" />
-                      <arg value="--network" />
-                      <arg value="kafka" />
                       <arg value="--name" />
                       <arg value="instanton-temp" />
                       <arg value="--privileged" />
-                      <arg value="--user" />
-                      <arg value="root" />
                       <arg value="--env" />
                       <arg value="WLP_CHECKPOINT=${checkpoint.type}" />
                       <arg value="${image.repository}${image.user}${image.name}:${image.tag}-temp" />

@@ -40,9 +40,5 @@ COPY --chown=default:root target/liberty/wlp/usr/servers/reactive-service-a/serv
 COPY --chown=default:root target/liberty/wlp/usr/servers/reactive-service-a/bootstrap.properties /config/bootstrap.properties
 COPY --chown=default:root target/reactive-service-a.war /config/apps
 
-USER root
-RUN dnf install -y iptables
-USER 1001
-
 # This script will add the requested XML snippets, grow image to be fit-for-purpose and apply interim fixes
 RUN configure.sh
