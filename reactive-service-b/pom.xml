@@ -189,6 +189,7 @@
                       <arg value="--privileged" />
                       <arg value="--env" />
                       <arg value="WLP_CHECKPOINT=${checkpoint.type}" />
+                      <arg line="${image.checkpoint.arguments}" />
                       <arg value="${image.repository}${image.user}${image.name}:${image.tag}-temp" />
                     </exec>
 
