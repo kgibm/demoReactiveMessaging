@@ -1,4 +1,4 @@
-FROM icr.io/appcafe/open-liberty:beta-instanton
+FROM localhost/appcafe/open-liberty:beta-instanton
 
 # These defaults are overridden by `--build-arg` arguments in pom.xml
 ARG NAME=placeholder
