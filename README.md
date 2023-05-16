@@ -39,12 +39,13 @@
 
 ```
 CLUSTER_DOMAIN_NAME=...
+PROJECT=...
 echo $(oc whoami --show-token) | podman login --tls-verify=false -u $(oc whoami) --password-stdin default-route-openshift-image-registry.${CLUSTER_DOMAIN_NAME}
 REGISTRY="$(oc get routes -n openshift-image-registry -o jsonpath='{.items[0].spec.host}')"
-podman tag localhost/reactive-service-b $REGISTRY/default/reactive-service-b
-podman tag localhost/reactive-service-a $REGISTRY/default/reactive-service-a
-podman push --tls-verify=false $REGISTRY/default/reactive-service-b
-podman push --tls-verify=false $REGISTRY/default/reactive-service-a
+podman tag localhost/reactive-service-b $REGISTRY/$PROJECT/reactive-service-b
+podman tag localhost/reactive-service-a $REGISTRY/$PROJECT/reactive-service-a
+podman push --tls-verify=false $REGISTRY/$PROJECT/reactive-service-b
+podman push --tls-verify=false $REGISTRY/$PROJECT/reactive-service-a
 oc create serviceaccount privilegedserviceaccount
 oc adm policy add-scc-to-user privileged -z privilegedserviceaccount
 ```
@@ -83,13 +84,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka
+  name: kafka-0
   labels:
     app: kafka
 spec:
   ports:
   - port: 9092
-    name: kafka
+    name: kafka-0
   clusterIP: None
   selector:
     app: kafka
