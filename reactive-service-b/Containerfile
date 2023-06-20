@@ -43,7 +43,11 @@ COPY --chown=default:root target/liberty/wlp/usr/servers/reactive-service-b/boot
 COPY --chown=default:root target/reactive-service-b.war /config/apps
 
 USER root
-RUN dnf install -y iptables
+COPY lib/OpenJ9-JDK17-x86-64_linux-20230517-224319.tar.gz /opt/
+RUN dnf install -y iptables && \
+    rm -rf /opt/java/java-ea && \
+    tar xzvf /opt/OpenJ9-JDK17-x86-64_linux-20230517-224319.tar.gz -C /opt/java/ && \
+    mv /opt/java/jdk /opt/java/java-ea
 USER 1001
 
 ENV WLP_LOGGING_CONSOLE_FORMAT=${CONSOLE_FORMAT}
