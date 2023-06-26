@@ -2,6 +2,10 @@
 
 ## Development
 
+1. If using `podman machine`, set your connection to the `root` connection:
+   ```
+   podman system connection default podman-machine-default-root
+   ```
 1. Create Kafka container network if it doesn't exist:
    ```
    podman network create kafka
