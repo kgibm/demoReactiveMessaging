@@ -28,7 +28,7 @@
    ```
 1. Run `reactive-service-b`:
    ```
-   podman run --privileged --rm --network kafka --env "CRIU_EXTRA_ARGS=--tcp-close" -it localhost/reactive-service-b:latest
+   podman run --privileged --rm --network kafka -p 9081:9081 --env "CRIU_EXTRA_ARGS=--tcp-close" -it localhost/reactive-service-b:latest
    ```
 1. Run `reactive-service-a`:
    ```
@@ -36,6 +36,16 @@
    ```
 1. Every 30 seconds, it should be visible in respective container logs that `reactive-service-a` is creating a message and `reactive-service-b` is receiving it.
 1. A specific message may also be produced by accessing <http://localhost:9080/kafka/produce?price=999>
+1. To post a [`CloudEvent`](https://github.com/cloudevents/spec/blob/v1.0/spec.md#required-attributes) to `reactive-service-b`:
+   ```
+   curl -X POST http://localhost:9081/api/ce/cloudEvent1 \
+     -H "Ce-Source: https://example.com/" \
+     -H "Ce-Id: $(uuidgen)" \
+     -H "Ce-Specversion: 1.0" \
+     -H "Ce-Type: CloudEvent1" \
+     -H "Content-Type: application/json" \
+     -d "\"Hello World\""
+   ```
 
 ## OpenShift
 
@@ -164,3 +174,5 @@ spec:
 1. <https://openliberty.io/guides/microprofile-reactive-messaging.html>
 1. <https://smallrye.io/smallrye-reactive-messaging/latest/concepts/concepts/>
 1. <https://github.com/OpenLiberty/open-liberty/issues/19889>
+1. <https://openliberty.io/blog/2022/10/17/microprofile-serverless-ibm-code-engine.html>
+1. <https://github.com/OpenLiberty/open-liberty/issues/21659>
