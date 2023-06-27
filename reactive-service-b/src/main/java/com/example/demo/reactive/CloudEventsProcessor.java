@@ -19,7 +19,7 @@ public class CloudEventsProcessor {
     @Produces(MediaType.APPLICATION_JSON)
 	public Response cloudEvent1(CloudEvent incoming) {
 		System.out.println("Received CloudEvent " + incoming);
-		Jsonb jsonb = JsonbBuilder.create();
+		//Jsonb jsonb = JsonbBuilder.create();
 		//CloudEventData data = incoming.getData();
 		return Response.ok().build();
 	}

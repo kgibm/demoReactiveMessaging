@@ -25,8 +25,6 @@
         executing any code from the application.
 
       https://openliberty.io/blog/2023/02/10/instant-on-beta-update.html
-
-      beforeAppStart
     -->
     <checkpoint.type>applications</checkpoint.type>
     <maven.compiler.source>1.8</maven.compiler.source>

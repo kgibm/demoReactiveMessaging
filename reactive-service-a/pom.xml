@@ -158,6 +158,8 @@
                       <arg value="NET_ADMIN" />
                       <arg value="--cap-add" />
                       <arg value="SYS_PTRACE" />
+                      <arg value="--cap-add" />
+                      <arg value="SETPCAP" />
                       <arg value="--security-opt" />
                       <arg value="seccomp=unconfined" />
                       <arg value="--build-arg" />
