@@ -11,24 +11,11 @@
 
   <properties>
     <openliberty.maven.version>3.7.1</openliberty.maven.version>
-    <openliberty.version>23.0.0.3</openliberty.version>
-    <!--
-      applications - This is the last phase where a checkpoint can happen, so
-        it has the potential to provide the fastest startup time when restoring
-        the application instance. The checkpoint happens after all configured
-        applications are reported as started. This phase happens before opening
-        any ports for listening to incoming requests for the applications.
-
-      deployment - The checkpoint happens after processing the configured
-        application metadata. If the application has any components that get run
-        as part of the application starting, the checkpoint is taken before
-        executing any code from the application.
-
-      https://openliberty.io/blog/2023/02/10/instant-on-beta-update.html
-    -->
-    <checkpoint.type>applications</checkpoint.type>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <openliberty.version>23.0.0.6</openliberty.version>
+    <!-- https://openliberty.io/docs/latest/instanton.html#beforeAppStart -->
+    <checkpoint.type>afterAppStart</checkpoint.type>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <image.builder>podman</image.builder>
