@@ -2,7 +2,6 @@ package com.example.demo.reactive;
 
 import java.util.Random;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Flowable;
